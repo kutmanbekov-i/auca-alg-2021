@@ -9,7 +9,7 @@ int main()
     while (t--)
     {
         cin >> n >> m;
-        vector<int> a(10001, 0);
+        map<int, int> a;
         
         for (int i = 0; i < n; ++i)
         {
@@ -23,9 +23,9 @@ int main()
         }
         
         int cnt = 0;
-        for (int k = 0; k < 10001; ++k)
+        for (auto it = a.begin(); it != a.end(); ++it)
         {
-            cnt += abs(a[k]);
+            cnt += abs((*it).second);
         }
         cout << cnt << '\n';
     }
