@@ -4,36 +4,34 @@ using namespace std;
 
 int main()
 {
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    
     int n;
-    while (cin >> n)
+    
+    while (cin >> n, n)
     {
-        if (n == 0) break;
-        
         multiset<int> bills;
-        int paid = 0;
-        auto min_p = bills.end(), max_p = bills.end();
+        
+        size_t paid = 0;
         
         while (n--)
         {
             int k; cin >> k;
 
-            for (int i = 0; i < k; ++i)
+            while (k--)
             {
                 int x; cin >> x;
+                
                 bills.insert(x);
             }
             
-            int min = 1000001, max = -1;
-            for (auto it = bills.begin(); it != bills.end(); ++it)
-            {
-                if (*it < min)      { min = *it; min_p = it; }
-                else if (*it > max) { max = *it; max_p = it; }
-            }
+            auto min_p = bills.begin(), max_p = --bills.end();
             
-            bills.erase(max_p);
-            bills.erase(min_p);
+            paid += *max_p - *min_p;
             
-            paid += max - min;
+            bills.erase(max_p); bills.erase(min_p);
+            
         }
         cout << paid << '\n';
     }
