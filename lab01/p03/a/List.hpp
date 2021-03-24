@@ -65,6 +65,26 @@ public:
         return *this;
     }
 
+    // move constructor
+    List (List &&other) noexcept
+    : mHead(new Node(T(), nullptr, nullptr)), mTail(new Node(T(), nullptr, nullptr)), mSize(0)
+    {
+        std::swap(mHead, other.mHead);
+        std::swap(mTail, other.mTail);
+    }
+
+    // move assignment
+    List &operator=(List &&other) noexcept
+    {
+        if (this != &other)
+        {
+            std::swap(mHead, other.mHead);
+            std::swap(mTail, other.mTail);
+            std::swap(mSize, other.mSize);
+        }
+        return *this;
+    }
+
 
     ~List()
     {
