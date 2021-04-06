@@ -16,8 +16,9 @@ int main()
         if (j) cout << '\n';
         cin >> b >> sg >> sb;
         
-        multiset<int, greater<int>> green;
-        multiset<int, greater<int>> blue;
+        multiset<int, greater<int>> green, blue;
+        
+        vector <int> G, B;
         
         for (int i = 0; i < sg; ++i)
         {
@@ -30,24 +31,43 @@ int main()
             blue.insert(x);
         }
         
-        for (auto p = green.begin(), q = blue.begin(); p != green.end() and q != blue.end(); )
+        while (!green.empty() and !blue.empty())
         {
-            int x = min(*p, *q);
+            G.clear(); B.clear();
             
-            if (*p - x)
-                green.insert(*p - x);
-            if (*q - x)
-                blue.insert(*q - x);
+            for (int i = 0; i < b; ++i)
+            {
+                auto p = green.begin();
+                auto q = blue.begin();
                 
-            p = green.erase(p);
-            q = blue.erase(q);
-    
+                int x = min(*p, *q);
                 
-            // ++p; ++q;            no need to increment, because erase returns pointer to the next element
-            p = green.begin();
-            q = blue.begin();
+                if (*p - x)
+                {
+                    blue.erase(q);
+                    green.erase(p);
+                    G.push_back(*p - x);
+                }
+                else if (*q - x)
+                {
+                    green.erase(p);
+                    blue.erase(q);
+                    B.push_back(*q - x);
+                }
+                else
+                {
+                    p = green.erase(p);
+                    q = blue.erase(q);
+                }
+                
+                if (green.size() == 0 || blue.size() == 0) break;
+            }
+            
+            for (int i = 0; i < G.size(); ++i)
+                green.insert(G[i]);
+            for (int i = 0; i < B.size(); ++i)
+                blue.insert(B[i]);
         }
-        // cout << *green.begin() << ' ' << *blue.begin() << endl;
 
         if (*blue.begin() < *green.begin())
         {
