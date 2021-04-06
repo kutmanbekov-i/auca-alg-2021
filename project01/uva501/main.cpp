@@ -11,6 +11,8 @@ int main()
     
     for (int j = 0; j < k; ++j)
     {
+        if (j) cout << '\n';
+        
         int m, n;
         cin >> m >> n;
         
