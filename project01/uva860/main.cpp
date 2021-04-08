@@ -47,8 +47,8 @@ int main()
             
         Et /= n;
         
-        Erel = Et / log10(n) * 100;
+        Erel = Et * 100 / log10(n);
         
-        printf("%d %.1f %d\n", n, Et, (int)Erel);
+        printf("%d %.1f %.0f\n", n, Et, round(Erel));
     }
 }
