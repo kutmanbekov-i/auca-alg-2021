@@ -25,7 +25,7 @@ int main()
         if (j)
             cout << '\n';
 
-        map<string, string> fragments;
+        map<string, int> fragments;
         vector<string> v;
 
         while (getline(cin, line) and line != "")
@@ -36,34 +36,27 @@ int main()
 
         for (int i = 0, k = v.size() - 1; k >= i; ++i, --k)
         {
-            fragments.insert({v[i], v[k]});
+            fragments[v[i] + v[k]]++;
+            fragments[v[k] + v[i]]++;
         }
-
+        
+        // for (auto it = fragments.begin(); it != fragments.end(); ++it)
+        // {
+        //     cout << it->first << ": " << it->second << '\n';
+        // }
+        
         string out;
-
-        auto it2 = fragments.begin();
-
-        if (fragments.size() == 1)
+        int most_frequent = 0;
+        
+        for (auto it = fragments.begin(); it != fragments.end(); ++it)
         {
-            out = it2->first + it2->second;
-        }
-        else
-        {
-            ++it2;
-            // cout << fragments.size();
-
-            for (auto it = fragments.begin(); it2 != fragments.end(); ++it, ++it2)
+            if (it->second > most_frequent)
             {
-                if (it->first + it->second == it2->first + it2->second or
-                    it->second + it->first == it2->first + it2->second or
-                    it->first + it->second == it2->second + it2->first or
-                    it->second + it->first == it2->second + it->first)
-                {
-                    out = it->first + it->second;
-                    break;
-                }
+                most_frequent = it->second;
+                out = it->first;
             }
         }
+
         cout << out << '\n';
     }
 }
