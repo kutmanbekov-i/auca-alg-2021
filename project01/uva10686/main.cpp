@@ -12,93 +12,76 @@ int main()
         int c; cin >> c;
         
         vector<string> order;
-        unordered_map <string, set<string>> words;
-        unordered_map <string, int> fit_req;
-        unordered_map <string, int> appears;
-        unordered_map <string, bool> checked;
+        multimap <string, string> words;
+        map <string, int> fit_req, appears;
         
         while (c--)
         {
             int w, p;
             cin >> category >> w >> p;
             
+            map <string, bool> checked;
             fit_req[category] = p;
             order.emplace_back(category);
+            
             for (int i = 0; i < w; ++i)
             {
                 cin >> word;
-                words[category].insert(word);
+                if (checked.find(word) == checked.end())
+                {
+                    words.insert( { word, category } );
+                    checked[word] = true;
+                    // appears[word] = 0;
+                }
             }
         }
-        
-        set <string> text;
+        map <string, bool> checked;
         getline(cin, line);
-        
+
         while (getline(cin, line) and line != "")
         {
-            istringstream sinp(line);
-            while (sinp >> txt)
+            for (int i = 0; i < line.size(); ++i)
             {
-                string temp;
-                for (int i = 0; i < txt.size(); ++i)
+                if (!isalpha(line[i]))
                 {
-                    if (isalpha(txt[i]))
+                  line[i] = ' ';
+                }
+            }
+
+            istringstream sinp(line);
+            
+            while (sinp >> line)
+            {
+                if (checked.find(line) != checked.end())
+                {
+                    continue;
+                }
+                checked[line] = true;
+                
+                if (words.count(line) > 0)
+                {
+                    auto res = words.equal_range(line);     // multimap keeps its elements sorted by key values
+                    
+                    for (auto it = res.first; it != res.second; ++it)
                     {
-                        temp += txt[i];
-                    }
-                    else
-                    {
-                        text.insert(temp);
-                        temp.clear();
+                        ++appears[it->second];
                     }
                 }
-                text.insert(temp);
-                // cout << temp << " ";
             }
         }
-        int fit = 0;
-        // for (auto it = words.begin(); it != words.end(); ++it)
+
+        int first = 0;
         for (const string &w : order)
         {
-            auto it = words.find(w);
-            if (it == words.end())
-                break;
-                
-            if (text.size() == 0)
+            if (appears[ w ] >= fit_req[ w ])
             {
-                if (fit_req[it->first] == 0)
-                {
-                    if (fit)
-                            cout << ",";
-                            
-                    cout << it->first;
-                    checked[it->first] = true;
-                    ++fit;
-                }
-            }
-            else
-            {
-                for (const string &s : text)
-                {
-                    if (it->second.count(s))
-                    {
-                        ++appears[it->first]; 
-                    }
-                    // cout << it->second.size() << '\n';
-                    if (!checked[it->first] and appears[it->first] >= fit_req[it->first])
-                    {
-                        if (fit)
-                                cout << ",";
-                        cout << it->first;
-                        
-                        checked[it->first] = true;
-                        ++fit;
-                    }
-                }
+                if (first)
+                        cout << ",";
+                cout << w;
+                ++first;
             }
         }
-        
-        if (!fit)
+        if (!first)
                 cout << "SQF Problem.";
         cout << '\n';
     }
