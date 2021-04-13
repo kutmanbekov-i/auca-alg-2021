@@ -4,20 +4,18 @@ using namespace std;
 
 int main()
 {
-    ios_base::sync_with_stdio(0);
-    cin.tie(NULL);
-    
-    int p, g;
-    string party, line, w;
+    int p, g, a, b;
+    string line, w;
+    char party[21];
     double percent;
     cin >> g >> p;
     
-    unordered_map <string, double> parties;
+    unordered_map <string, int> parties;
     
     while (g--)
     {
-        cin >> party >> percent;
-        parties[party] += percent;
+        scanf("%s %d.%d", party, &a, &b);
+        parties[party] = a * 10 + b;
     }
     
     getline(cin, line);
@@ -27,8 +25,7 @@ int main()
         
         istringstream sinp(line);
         
-        double sum = 0, num;
-        // int num;
+        int sum = 0, num;
         string sign;
         bool number = false;
         bool correct = false;
@@ -37,12 +34,7 @@ int main()
         {
             if (number)
             {
-                num = stof(w);
-                // double intpart;
-                // modf(sum, &intpart) == 0.0;
-                // sum = intpart;
-                // ssum = to_string(sum);
-                
+                num = stoi(w) * 10;
                 if (sign == ">")
                     correct = sum > num;
                 
