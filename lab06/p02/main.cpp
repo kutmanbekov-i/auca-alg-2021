@@ -17,6 +17,10 @@ void dfs(int v, vector<vector<int>> &graph, vector<Color> &colors, vector<int> &
 
     for (auto e : graph[v])
     {
+        if (colors[e] == Color::Red)
+        {
+            throw runtime_error("Cycle: input is not a Directed Acyclic Graph. The Loop is Found.\nVertex: " + to_string(e + 1));
+        }
         if (colors[e] == Color::White)
         {
             dfs(e, graph, colors, order);
@@ -28,6 +32,7 @@ void dfs(int v, vector<vector<int>> &graph, vector<Color> &colors, vector<int> &
 }
 
 int main()
+try
 {
     int nVertices;
     cin >> nVertices;
@@ -73,4 +78,8 @@ int main()
     cout << '\n';
 
     return 0;
+}
+catch(runtime_error &e)
+{
+    cerr << e.what() << '\n';
 }
