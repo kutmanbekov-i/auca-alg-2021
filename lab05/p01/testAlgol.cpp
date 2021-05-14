@@ -6,7 +6,7 @@ using namespace std;
 
 int main()
 {
-    vector<int> v = {3301, 31415926, 271828, 161803, 1, 2, 3, 4, 5};
+    vector<int> v = {-42, 3301, 31415926, 271828, 161803, 1, 2, 3, 4, 5};
     sort(v.begin(), v.end());
 
     for (int e : v)
