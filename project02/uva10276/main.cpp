@@ -12,34 +12,23 @@ int main()
         
         vector<int> pegs(n, 0);
         // solve(n);
+        int i, j, tmp;
         
-        for (int i = 1; ; ++i)
+        pegs[0] = 1;
+        for(i = 2; ; i++)
         {
-            int index = 1, sqrt_v = 0, value = 0;
-            
-            while (pegs[index] and index <= n) {
-                value = pegs[index] + i;
-                sqrt_v = (int)sqrt(value + 0.1);
-                if (sqrt_v*sqrt_v == value)
+            for(j = 0; j < n; j++)
+            {
+                tmp = pegs[j] + i;
+                tmp = (int)sqrt(tmp);
+                if (tmp * tmp == pegs[j] + i or pegs[j] == 0)
                 {
-                    pegs[index] = i;
+                    pegs[j] = i;
                     break;
-                } else
-                {
-                    index++;
                 }
             }
-            //printf("index [%d] : %d\n", index, i);
-            if (index > n)
-            {
-                printf("%d\n", i-1);
-                break;
-            } else {
-                pegs[index] = i;
-            }
+            if (j == n)  break;
         }
-        
-        
+        printf("%d\n", i - 1);
     }
-
 }
