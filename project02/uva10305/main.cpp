@@ -5,16 +5,16 @@ using namespace std;
 static vector <int> dx = {1, 0, -1, 0};
 static vector <int> dy = {0, 1, 0, -1};
 
-void print(vector<vector<int>> &graph, vector<int> &seen, int u, int &space)
+void print(vector<vector<int>> &graph, int n, vector<int> &seen, int u, int &space)
 {
 // 	cnt++;
 	
 	seen[u] = 1;
 	
-	for(int v = 1; v <= (int)graph.size() - 1; v++)
+	for(int v = 1; v <= n; v++)
 	{
 		if(!seen[v] and graph[u][v])			
-			print(graph, seen, v, space);
+			print(graph, n, seen, v, space);
 	}
 	
 	if (space++)
@@ -28,10 +28,12 @@ int main()
 
     int n, m;
     
-    while(cin >> n >> m and n != 0 and m != 0)
+    while(cin >> n >> m)
     {
-        vector<vector<int>> graph(n + 1, vector<int> (n + 1, 0));
-        vector <int> seen(n + 1);
+        if (!n and !m) break;
+        
+        vector<vector<int>> graph(101, vector<int> (101, 0));
+        vector <int> seen(101);
         
         while (m--)
         {
@@ -45,7 +47,7 @@ int main()
         {
             if (!seen[i])
             {
-                print(graph, seen, i, space);
+                print(graph, n, seen, i, space);
             }
         }
         cout << '\n';
