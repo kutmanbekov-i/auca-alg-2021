@@ -34,10 +34,10 @@ int bfs(string &start, string &end, map <string, int> &Index)
         q.pop();
         int idxu = q_index.front();
         q_index.pop();
-        for (int k = 0; k < 7; ++k)
+        for (int k = 0; k <= 7; ++k)
         {
             string v = u;
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i <= 4; i++)
             {
                 v[i] += perms[k][i];
                 if (v[i] < '0')
@@ -69,12 +69,12 @@ int main()
         map<string, int> Index;
         start = end = "";
 
-        for (int i = 1; i < 4; ++i)
+        for (int i = 1; i <= 4; ++i)
         {
             cin >> val;
             start += val + 48;
         }
-        for (int i = 1; i < 4; ++i)
+        for (int i = 1; i <= 4; ++i)
         {
             cin >> val;
             end += val + 48;
@@ -84,7 +84,7 @@ int main()
         while (m--)
         {
             string tmp = "";
-            for (int i = 1; i < 4; ++i)
+            for (int i = 1; i <= 4; ++i)
             {
                 cin >> val;
                 tmp += val + 48;
