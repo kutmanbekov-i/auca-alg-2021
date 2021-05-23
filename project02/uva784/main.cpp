@@ -2,17 +2,12 @@
 
 using namespace std;
 
-static vector <int> dx = {1, 0, -1, 0, 1, 1, -1, -1};
-static vector <int> dy = {0, 1, 0, -1, 1, -1, 1, -1};
+static vector <int> dx = {1, 0, -1, 0};
+static vector <int> dy = {0, 1, 0, -1};
 
-void dfs (vector<string> &grid, vector<vector<int>> &seen, int i, int j)
+void dfs (int n, vector<string> &grid, vector<vector<int>> &seen, int i, int j)
 {
-    int n = (int)grid.size();
-    
-    // if (i == n - 1)
-    // {
-    //     return;
-    // }
+    // int n = (int)grid.size();
     
     seen[i][j] = 1;
 
@@ -23,7 +18,7 @@ void dfs (vector<string> &grid, vector<vector<int>> &seen, int i, int j)
         
         if (x >= 0 and y >= 0 and x < n and y < n and (grid[x][y] == ' ') and !seen[x][y])
         {
-            dfs(grid, seen, x, y);
+            dfs(n, grid, seen, x, y);
         
             grid[x][y] = '#';
         }
@@ -72,7 +67,7 @@ int main()
                     grid[r][c] = '#';
                     row = r; col = c;
                     
-                    dfs(grid, seen, r, c);
+                    dfs(n, grid, seen, r, c);
                     break;
                 }
             }
