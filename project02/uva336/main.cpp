@@ -21,8 +21,9 @@ int main()
         }
         int s, ttl;
         
-        while (cin >> s >> ttl and s and ttl)
+        while (cin >> s >> ttl)
         {
+            if (!s and !ttl) break;
             // Use BFS to solve the SSSP problem.
             queue<int> q;
             map<int, int> dist;
