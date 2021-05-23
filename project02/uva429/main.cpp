@@ -14,8 +14,6 @@ int main()
     
     while (t--)
     {
-        cin.ignore();
-        
         vector<string> words;
         
         
@@ -25,13 +23,13 @@ int main()
         }
         
         string start, end;
+        cin.ignore();
         
-        while (cin >> start >> end and start != "")
+        while (getline(cin, line) and line != "")
         {
-            // istringstream sinp(line);
-            
-            // string start, end;
-            // sinp 
+            istringstream sinp(line);
+
+            sinp >> start >> end;
             // BFS
             queue<string> q;
             map<string, int> transform;
@@ -62,6 +60,7 @@ int main()
                 }
             }    
             cout << start << " " << end << " " << transform[end] << '\n';
+
         }
         if (t)
                 cout << '\n';
