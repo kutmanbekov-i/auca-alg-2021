@@ -43,7 +43,8 @@ int main()
         {
             int z; cin >> z;
             
-            dfs(graph, seen, z, cnt);
+            if (!seen[z])
+                dfs(graph, seen, z, cnt);
         }
         
         cout << cnt << '\n';
