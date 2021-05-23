@@ -2,53 +2,61 @@
 
 using namespace std;
 
-void dfs(int r, int c, vector<string> &grid)
+static vector <int> dx = {1, 0, -1, 0, 1, 1, -1, -1};
+static vector <int> dy = {0, 1, 0, -1, -1, 1, 1, -1};
+
+void dfs(vector<string> &grid, vector<vector<int>> &seen, int i, int j)
 {
-    static vector<int> dx = {-1, -1, 0, 1, 1, 1, 0, -1}; // created only once and visible only in dfs (but they are global)
-    static vector<int> dy = {0, 1, 1, 1, 0, -1, -1, -1};
+// 	cnt++;
+	
+	int n = (int)grid.size();
+	int m = (int)grid[0].size();
+	
+	seen[i][j] = 1;
 
-    //videl[x][y] = 1;
-    grid[r][c] = '!';
-
-    for (int k = 0; k < 8; k++)
+    for(int k = 0; k <(int)dx.size(); k++)
     {
-        int x = r + dx[k];
-        int y = c + dy[k];
-        if ( 0 <= x and x < int(grid.size()) and 0 <= y and y < (int)grid[0].size() and grid[x][y] == '@')
-        {
-            //videl[x][y] = 1;
-            dfs(x, y, grid);
-        }
+        int x = i + dx[k];
+        int y = j + dy[k];
+        
+        if (x >= 0 and y >= 0 and x < n and y < m and grid[x][y] == '@' and !seen[x][y])
+            dfs(grid, seen, x, y);
     }
+
 }
 
 int main()
 {
-    for (int h, w; cin >> h >> w and h and w;)
+    ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
+
+    int n, m;
+    
+    while(cin >> n >> m and n and m)
     {
-        vector<string> grid(h);
-
-        for (int r = 0; r < h; ++r)
+        int cnt = 0;
+        
+        vector<vector<int>> seen(n, vector<int>(m));
+        vector<string> grid(n);
+        
+        for (int i = 0; i < n; ++i)
         {
-            cin >> grid[r];
+            cin >> grid[i];
         }
-
-        int nComps = 0;
-
-        for (int r = 0; r < h; ++r)
+        
+        for (int i = 0; i < n; ++i)
         {
-            for (int c = 0; c < w; ++c)
+            for (int j = 0; j < m; ++j)
             {
-                if (grid[r][c] == '@')
+                if (!seen[i][j] and grid[i][j] == '@')
                 {
-                    ++nComps;
-                    dfs(r, c, grid);
+                    ++cnt;
+                    dfs(grid, seen, i, j);
                 }
             }
         }
-
-        cout << nComps << '\n';
+        
+        cout << cnt << '\n';
     }
-
+    
     return 0;
 }
